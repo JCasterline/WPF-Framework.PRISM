@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="WPF.Framework.Module1.Views.HelloWorld"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mvvm="clr-namespace:Microsoft.Practices.Prism.Mvvm;assembly=Microsoft.Practices.Prism.Mvvm.Desktop"
+             xmlns:viewModels="clr-namespace:WPF.Framework.Module1.ViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mvvm:ViewModelLocator.AutoWireViewModel="True"
+             xmlns:prism="http://www.codeplex.com/prism"
+             xmlns:views="clr-namespace:WPF.Framework.Module1.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300"
+             d:DataContext="{d:DesignInstance Type=viewModels:HelloWorldViewModel, IsDesignTimeCreatable=True}">
+
+    <i:Interaction.Triggers>
+        <!-- All the InteractionRequestTriggers here subscribe to the corresponding interaction requests through simple bindings -->
+        <!-- In this case all of them raise a PopupWindowAction, but you can use other actions too -->
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding ConfirmationRequest, Mode=OneWay}">
+            <!-- This PopupWindowAction does not have a custom view defined, therefore it will try to use a DefaultNotificationWindow -->
+            <!-- which is a window used by default by Prism to shown INotification implementations -->
+            <!-- That window will be show as a modal dialog and centered over this window -->
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding NotificationRequest, Mode=OneWay}">
+            <!-- This PopupWindowAction does not have a custom view defined, therefore it will try to use a DefaultConfirmationWindow -->
+            <!-- which is a window used by default by Prism to shown IConfirmation implementations -->
+            <!-- That window will be show as a modal dialog and centered over this window -->
+            <prism:PopupWindowAction IsModal="True" CenterOverAssociatedObject="True"/>
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding CustomPopupViewRequest, Mode=OneWay}">
+            <!-- This PopupWindowAction has a custom view defined. When this action is executed the view will be shown inside a new window -->
+            <!-- Take into account that the view is created only once and will be reused each time the action is executed -->
+            <prism:PopupWindowAction>
+                <prism:PopupWindowAction.WindowContent>
+                    <views:CustomPopupView />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+
+        <prism:InteractionRequestTrigger SourceObject="{Binding ItemSelectionRequest, Mode=OneWay}">
+            <!-- This PopupWindowAction has a custom view defined. When this action is executed the view will be shown inside a new window -->
+            <!-- Take into account that the view and its view model are created only once and will be reused each time the action is executed -->
+            <prism:PopupWindowAction>
+                <prism:PopupWindowAction.WindowContent>
+                    <views:ItemSelectionView />
+                </prism:PopupWindowAction.WindowContent>
+            </prism:PopupWindowAction>
+        </prism:InteractionRequestTrigger>
+
+    </i:Interaction.Triggers>
+    <!--The Prism view model locator has a AutoWireViewModel attached property that when set calls 
+    AutoWireViewModelChanged methodin theViewModelLocationProvider class to resolve the view model 
+    for the view. By default it uses a convention based approach. The disadvantage of this approach
+    is that it does nto work well in design-time tools such as Microsoft Expression Blend or
+    Microsoft Visual Studio. This can be worked around by setting d:DataContext-->
+    
+    <!--The declarative construction and assignment of the view model by the view has the advantage 
+    that it is simple and works well in design-time tools such as Microsoft Expression Blend or 
+    Microsoft Visual Studio. The disadvantage of this approach is that the view has knowledge of 
+    the corresponding view model type and that the view model type must have a default constructor.-->
+    <!--<UserControl.DataContext>
+        <viewModels:HelloWorldViewModel/>
+    </UserControl.DataContext>-->
+    <Grid>
+        <StackPanel>
+        <TextBlock Text="{Binding HelloWorld}" Foreground="Green" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Calibri" FontSize="24" FontWeight="Bold"></TextBlock>
+
+            <Button Width="200" Height="25" Margin="5" Content="Raise Default Notification" Command="{Binding RaiseNotificationCommand}" />
+            <Button Width="200" Height="25" Margin="5" Content="Raise Default Confirmation" Command="{Binding RaiseConfirmationCommand}" />
+            <Button Width="200" Height="25" Margin="5" Content="Raise Custom Popup View Interaction" Command="{Binding RaiseCustomPopupViewCommand}" />
+            <Button Width="200" Height="25"  Margin="5" Content="Raise Item Selection Popup" Command="{Binding RaiseItemSelectionCommand}" />
+            <Button Width="200" Height="25"  Margin="5" Content="Open File Dialog" Command="{Binding RaiseOpenFileDialogCommand}" />
+        </StackPanel>
+    </Grid>
+</UserControl>
