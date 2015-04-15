@@ -1,14 +1,16 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using WPF.Framework.Infrastructure;
 using WPF.Framework.Infrastructure.Services;
+using WPF.Framework.Infrastructure.Services.Interfaces;
 using WPF.Framework.Infrastructure.ViewModelBases;
+using WPF.Framework.Module1.ViewModels.Interfaces;
 
 namespace WPF.Framework.Module1.ViewModels
 {
-    public class HelloWorldViewModel : ViewModelBase
+    public class HelloWorldViewModel : ViewModelBase, IHelloWorldViewModel
     {
 
         //RaiseOpenFileDialogCommand
@@ -20,6 +22,8 @@ namespace WPF.Framework.Module1.ViewModels
         public InteractionRequest<IConfirmation> ConfirmationRequest { get; private set; }
         public InteractionRequest<INotification> CustomPopupViewRequest { get; private set; }
         public InteractionRequest<ItemSelectionNotification> ItemSelectionRequest { get; private set; }
+
+        private readonly IDialogService _dialogService;
 
         public HelloWorldViewModel()
         {
@@ -38,18 +42,18 @@ namespace WPF.Framework.Module1.ViewModels
             RaiseItemSelectionCommand = new DelegateCommand(RaiseItemSelection);
 
             RaiseOpenFileDialogCommand = new DelegateCommand(RaiseOpenFileDialog);
+            RaiseExceptionDialogCommand = new DelegateCommand(RaiseExceptionDialog);
+        }
+
+        public HelloWorldViewModel(IDialogService dialogService) : this()
+        {
+            _dialogService = dialogService;
         }
 
         public string InteractionResultMessage
         {
-            get
-            {
-                return _resultMessage;
-            }
-            set
-            {
-                SetProperty(ref _resultMessage, value);
-            }
+            get { return _resultMessage; }
+            set { SetProperty(ref _resultMessage, value); }
         }
 
         private string _helloWorld = "Hello World!";
@@ -59,12 +63,14 @@ namespace WPF.Framework.Module1.ViewModels
             get { return _helloWorld; }
             set { SetProperty(ref _helloWorld, value); }
         }
+
         public ICommand RaiseNotificationCommand { get; private set; }
         public ICommand RaiseConfirmationCommand { get; private set; }
         public ICommand RaiseCustomPopupViewCommand { get; private set; }
         public ICommand RaiseItemSelectionCommand { get; private set; }
 
         public ICommand RaiseOpenFileDialogCommand { get; private set; }
+        public ICommand RaiseExceptionDialogCommand { get; private set; }
 
         private void RaiseNotification()
         {
@@ -73,8 +79,8 @@ namespace WPF.Framework.Module1.ViewModels
             // As parameters we are passing a Notification, which is a default implementation of INotification provided by Prism
             // and a callback that is executed when the interaction finishes.
             NotificationRequest.Raise(
-               new Notification { Content = "Notification Message", Title = "Notification" },
-               n => { InteractionResultMessage = "The user was notified."; });
+                new Notification {Content = "Notification Message", Title = "Notification"},
+                n => { InteractionResultMessage = "The user was notified."; });
         }
 
         private void RaiseConfirmation()
@@ -84,7 +90,7 @@ namespace WPF.Framework.Module1.ViewModels
             // As parameters we are passing a Confirmation, which is a default implementation of IConfirmation (which inherits
             // from INotification) provided by Prism and a callback that is executed when the interaction finishes.
             ConfirmationRequest.Raise(
-                new Confirmation { Content = "Confirmation Message", Title = "Confirmation" },
+                new Confirmation {Content = "Confirmation Message", Title = "Confirmation"},
                 c => { InteractionResultMessage = c.Confirmed ? "The user accepted." : "The user cancelled."; });
         }
 
@@ -95,7 +101,7 @@ namespace WPF.Framework.Module1.ViewModels
             // so it will inherit the DataContext of the window, which will be this same notification.
             InteractionResultMessage = "";
             CustomPopupViewRequest.Raise(
-                new Notification { Content = "Message for the CustomPopupView", Title = "Custom Popup" });
+                new Notification {Content = "Message for the CustomPopupView", Title = "Custom Popup"});
         }
 
         private void RaiseItemSelection()
@@ -132,7 +138,36 @@ namespace WPF.Framework.Module1.ViewModels
 
         private void RaiseOpenFileDialog()
         {
-            var filePath = new DialogService().OpenFileDialog();
+            var filePath = _dialogService.OpenFileDialog();
+        }
+
+        private void RaiseExceptionDialog()
+        {
+            try
+            {
+                ThrowException();
+            }
+            catch (Exception ex)
+            {
+                _dialogService.ExceptionMessageBox(ex, "Hello World");
+            }
+        }
+
+        private void ThrowException()
+        {
+            try
+            {
+                ThrowInnerException();
+            }
+            catch (Exception ex)
+            {
+                Exception exc = new Exception("Cannot escape throwing error.", ex);
+                throw exc;
+            }
+        }
+        private void ThrowInnerException()
+        {
+            Int32.Parse("I");
         }
     }
 }

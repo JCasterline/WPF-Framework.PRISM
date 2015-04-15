@@ -1,6 +1,8 @@
 ﻿using System.Windows.Controls;
 using Microsoft.Practices.Prism.Mvvm;
+using WPF.Framework.Infrastructure.Services.Interfaces;
 using WPF.Framework.Module1.ViewModels;
+using WPF.Framework.Module1.ViewModels.Interfaces;
 
 namespace WPF.Framework.Module1.Views
 {
@@ -11,9 +13,13 @@ namespace WPF.Framework.Module1.Views
     {
         public HelloWorld()
         {
-            InitializeComponent();
+            InitializeComponent();   
+        }
+
+        public HelloWorld(IHelloWorldViewModel vm) : this()
+        {
             //Create viewmodel programmatically
-            //DataContext = new HelloWorldViewModel();
+            DataContext = vm;
         }
     }
 }

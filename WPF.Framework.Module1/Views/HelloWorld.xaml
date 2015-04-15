@@ -3,10 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mvvm="clr-namespace:Microsoft.Practices.Prism.Mvvm;assembly=Microsoft.Practices.Prism.Mvvm.Desktop"
              xmlns:viewModels="clr-namespace:WPF.Framework.Module1.ViewModels"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-             mvvm:ViewModelLocator.AutoWireViewModel="True"
              xmlns:prism="http://www.codeplex.com/prism"
              xmlns:views="clr-namespace:WPF.Framework.Module1.Views"
              mc:Ignorable="d" 
@@ -74,6 +72,7 @@
             <Button Width="200" Height="25" Margin="5" Content="Raise Custom Popup View Interaction" Command="{Binding RaiseCustomPopupViewCommand}" />
             <Button Width="200" Height="25"  Margin="5" Content="Raise Item Selection Popup" Command="{Binding RaiseItemSelectionCommand}" />
             <Button Width="200" Height="25"  Margin="5" Content="Open File Dialog" Command="{Binding RaiseOpenFileDialogCommand}" />
+            <Button Width="200" Height="25"  Margin="5" Content="Exception Messagebox" Command="{Binding RaiseExceptionDialogCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

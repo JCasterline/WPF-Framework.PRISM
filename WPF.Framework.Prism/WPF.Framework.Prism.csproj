@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WPF.Framework.Prism</RootNamespace>
     <AssemblyName>WPF.Framework.Prism</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -106,6 +107,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="UnityExtensions\BuildTrackingExtensions.cs" />
+    <Compile Include="UnityExtensions\LogCreationExtensions.cs" />
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -140,6 +143,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WPF.Framework.Infrastructure\WPF.Framework.Infrastructure.csproj">
+      <Project>{9ec90100-437c-48f3-810b-745be7325de5}</Project>
+      <Name>WPF.Framework.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WPF.Framework.Module1\WPF.Framework.Module1.csproj">
       <Project>{78cfbf6a-f8f1-4488-aedc-32d83b93ae95}</Project>
       <Name>WPF.Framework.Module1</Name>

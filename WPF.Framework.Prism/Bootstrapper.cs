@@ -1,9 +1,11 @@
-﻿using System;
-using System.IO;
-using System.Windows;
+﻿using System.Windows;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.UnityExtensions;
-using WPF.Framework.Module1;
+using Microsoft.Practices.Unity;
+using WPF.Framework.Infrastructure.Services;
+using WPF.Framework.Infrastructure.Services.Interfaces;
+using WPF.Framework.Prism.UnityExtensions;
 
 namespace WPF.Framework.Prism
 {
@@ -12,18 +14,34 @@ namespace WPF.Framework.Prism
         protected override void ConfigureContainer()
         {
             base.ConfigureContainer();
+
+            //Add extensions for getting the correct named logger
+            Container.AddNewExtension<BuildTracking>().AddNewExtension<LogCreation>();
+
+            //Resolve default instance of ILoggerFacade
+            Container.Resolve<ILoggerFacade>();
+
+            //Register types as singletons
+            Container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
         }
-        
+
+        protected override ILoggerFacade CreateLogger()
+        {
+            //Create default instance of logger for logging bootstrapper items
+            //This happens before the container is created.
+            return new LoggerService(typeof (Bootstrapper));
+        }
+
         protected override DependencyObject CreateShell()
         {
-            return new Shell();
+            return Container.Resolve<Shell>();
         }
 
         protected override void InitializeShell()
         {
             base.InitializeShell();
 
-            Application.Current.MainWindow = (Window)Shell;
+            Application.Current.MainWindow = (Shell) Shell;
             Application.Current.MainWindow.Show();
         }
 
@@ -35,8 +53,6 @@ namespace WPF.Framework.Prism
             //ModuleCatalog moduleCatalog = (ModuleCatalog)ModuleCatalog;
             //moduleCatalog.AddModule(typeof(WPF.Framework.Module1.Module));
         }
-
-        #region Overrides of Bootstrapper
 
         protected override IModuleCatalog CreateModuleCatalog()
         {
@@ -55,9 +71,7 @@ namespace WPF.Framework.Prism
             //Register modules using a configuration file
             return new ConfigurationModuleCatalog();
 
-            return base.CreateModuleCatalog();
+            //return base.CreateModuleCatalog();
         }
-
-        #endregion
     }
 }
