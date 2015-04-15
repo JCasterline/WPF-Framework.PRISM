@@ -40,6 +40,8 @@ using System.Windows;
     // app, or any theme specific resource dictionaries)
 )]
 
+// The following GUID is for the ID of the typelib if this project is exposed to COM
+[assembly: Guid("fd2928e9-aae5-4ae0-8ad5-eafffe13ac03")]
 
 // Version information for an assembly consists of the following four values:
 //
