@@ -3,6 +3,22 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:regions="http://www.codeplex.com/CompositeWPF"
         Title="Shell" Height="350" Width="525">
-    <ItemsControl Name="MainRegion" regions:RegionManager.RegionName="MainRegion"/>
-    
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+           <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ContentControl Grid.Row="0" Grid.Column="1" Height="30" regions:RegionManager.RegionName="MenuRegion" />
+        <ContentControl Grid.Row="0" Grid.RowSpan="3" Grid.Column="0" regions:RegionManager.RegionName="NavigationRegion" />
+        <ContentControl Grid.Row="1" Grid.Column="1" regions:RegionManager.RegionName="MainRegion" />
+        <ContentControl Grid.Row="2" Grid.Column="1" Height="30" regions:RegionManager.RegionName="StatusRegion" />
+
+    </Grid>
 </Window>

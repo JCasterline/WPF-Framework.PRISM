@@ -1,11 +1,14 @@
 ﻿using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Prism.UnityExtensions;
 using Microsoft.Practices.Unity;
+using WPF.Framework.Infrastructure;
 using WPF.Framework.Infrastructure.Services;
 using WPF.Framework.Infrastructure.Services.Interfaces;
 using WPF.Framework.Prism.UnityExtensions;
+using WPF.Framework.Prism.Views;
 
 namespace WPF.Framework.Prism
 {
@@ -43,6 +46,15 @@ namespace WPF.Framework.Prism
 
             Application.Current.MainWindow = (Shell) Shell;
             Application.Current.MainWindow.Show();
+
+            var regionManager = Container.Resolve<RegionManager>();
+
+            //Register views with view discover since only one view will be displayed in these regions
+            regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, () => Container.Resolve<NavigationView>());
+            regionManager.RegisterViewWithRegion(RegionNames.StatusRegion, () => Container.Resolve<StatusView>());
+            regionManager.RegisterViewWithRegion(RegionNames.MenuRegion, () => Container.Resolve<MenuView>());
+
+
         }
 
         protected override void ConfigureModuleCatalog()

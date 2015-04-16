@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
+using Microsoft.Practices.Prism.Regions;
 using WPF.Framework.Infrastructure.Services;
 using WPF.Framework.Infrastructure.Services.Interfaces;
 using WPF.Framework.Infrastructure.ViewModelBases;
@@ -10,7 +11,7 @@ using WPF.Framework.Module1.ViewModels.Interfaces;
 
 namespace WPF.Framework.Module1.ViewModels
 {
-    public class HelloWorldViewModel : ViewModelBase, IHelloWorldViewModel
+    public class HelloWorldViewModel : ViewModelBase, IHelloWorldViewModel, INavigationAware
     {
 
         //RaiseOpenFileDialogCommand
@@ -168,6 +169,21 @@ namespace WPF.Framework.Module1.ViewModels
         private void ThrowInnerException()
         {
             Int32.Parse("I");
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+            
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+
         }
     }
 }
