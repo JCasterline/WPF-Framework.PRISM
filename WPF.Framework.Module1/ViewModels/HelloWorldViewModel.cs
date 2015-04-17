@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Microsoft.Practices.Prism.Regions;
@@ -11,7 +13,7 @@ using WPF.Framework.Module1.ViewModels.Interfaces;
 
 namespace WPF.Framework.Module1.ViewModels
 {
-    public class HelloWorldViewModel : ViewModelBase, IHelloWorldViewModel, INavigationAware
+    public class HelloWorldViewModel : ViewModelBase, IHelloWorldViewModel, INavigationAware, IActiveAware
     {
 
         //RaiseOpenFileDialogCommand
@@ -185,5 +187,18 @@ namespace WPF.Framework.Module1.ViewModels
         {
 
         }
+
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set { SetProperty(ref _isActive, value); }
+        }
+
+
+        public event EventHandler IsActiveChanged;
     }
 }

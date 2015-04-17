@@ -25,6 +25,7 @@ namespace WPF.Framework.Prism
             Container.Resolve<ILoggerFacade>();
 
             //Register types as singletons
+            Container.RegisterType<IShell, Shell>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
         }
 
@@ -37,7 +38,7 @@ namespace WPF.Framework.Prism
 
         protected override DependencyObject CreateShell()
         {
-            return Container.Resolve<Shell>();
+            return Container.Resolve<IShell>() as DependencyObject;
         }
 
         protected override void InitializeShell()

@@ -1,18 +1,20 @@
 ﻿using System;
-using System.Dynamic;
-using System.Windows.Input;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
 using WPF.Framework.Infrastructure;
+using WPF.Framework.Infrastructure.Models;
 using WPF.Framework.Infrastructure.PubSubEvents;
 using WPF.Framework.Module1.ViewModels;
 using WPF.Framework.Module1.ViewModels.Interfaces;
 using WPF.Framework.Module1.Views;
-using Microsoft.Practices.Prism.Commands;
-using WPF.Framework.Infrastructure.Models;
 
 namespace WPF.Framework.Module1
 {
@@ -42,16 +44,10 @@ namespace WPF.Framework.Module1
             var mainRegion = _regionManager.Regions[RegionNames.MainRegion];
 
             //Register views with region manager
-            //Register useing view injection since there can be multiple views in the main region
-            var view = _container.Resolve <HelloWorld>();
-            mainRegion.Add(view);
-            mainRegion.Deactivate(view);
+            _regionManager.RegisterViewWithRegion("MainRegion", typeof (HelloWorld));
+            _regionManager.RegisterViewWithRegion("MainRegion", typeof(UserControl1));
 
-            var view2 = _container.Resolve<UserControl1>();
-            mainRegion.Add(view2);
-            mainRegion.Deactivate(view2);
-
-            //To change view
+            //Since RegisterViewWithRegion does not activate a view, navigate to a view
             mainRegion.RequestNavigate(new Uri("HelloWorld", UriKind.Relative));
 
             try
@@ -77,6 +73,36 @@ namespace WPF.Framework.Module1
                     mainRegion.RequestNavigate(new Uri("HelloWorld", UriKind.Relative));
                 }) };
             _eventAggregator.GetEvent<AddNavigationButton>().Publish(navButton);
+
+            //var baseAddress = "http://localhost:8080/";
+            //using (var client = new HttpClient())
+            //{
+            //    //var response = client.GetAsync(baseAddress + "api/values").Result;
+
+            //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+            //    var form = new Dictionary<string, string>
+            //    {
+            //        {"grant_type", "password"},
+            //        {"username", "Test"},
+            //        {"password", "Password123!"},
+            //    };
+
+            //    var result = client.PostAsync(baseAddress + "token", new FormUrlEncodedContent(form)).Result;
+            //    if (result.IsSuccessStatusCode)
+            //    {
+            //        var token = JsonConvert.DeserializeObject<Token>(result.Content.ReadAsStringAsync().Result);
+
+            //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token.AccessToken);
+
+            //        var result2 = client.GetAsync(baseAddress + "api/values").Result;
+            //        var values = JsonConvert.DeserializeObject<List<string>>(result2.Content.ReadAsStringAsync().Result);
+            //    }
+            //    else
+            //    {
+                    
+            //    }
+            //}
         }
     }
 }
