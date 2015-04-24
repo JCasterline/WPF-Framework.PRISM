@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Common.Application;
 
 namespace WPF.Framework.Prism
 {
@@ -8,13 +9,13 @@ namespace WPF.Framework.Prism
     /// </summary>
     public partial class App : Application
     {
-        private Common.Application.SingleGlobalInstance _instance;
+        private SingleGlobalInstance _instance;
 
         #region Overrides of Application
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            _instance = Common.Application.SingleGlobalInstance.AcquireWithin(TimeSpan.FromSeconds(3));
+            _instance = SingleGlobalInstance.AcquireWithin(TimeSpan.FromSeconds(3));
             if (!_instance.HasHandle)
             {
                 MessageBox.Show(

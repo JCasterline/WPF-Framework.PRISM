@@ -32,7 +32,7 @@
         <prism:InteractionRequestTrigger SourceObject="{Binding CustomPopupViewRequest, Mode=OneWay}">
             <!-- This PopupWindowAction has a custom view defined. When this action is executed the view will be shown inside a new window -->
             <!-- Take into account that the view is created only once and will be reused each time the action is executed -->
-            <prism:PopupWindowAction>
+            <prism:PopupWindowAction IsModal="True">
                 <prism:PopupWindowAction.WindowContent>
                     <views:CustomPopupView />
                 </prism:PopupWindowAction.WindowContent>

@@ -8,7 +8,9 @@ using WPF.Framework.Infrastructure;
 using WPF.Framework.Infrastructure.Services;
 using WPF.Framework.Infrastructure.Services.Interfaces;
 using WPF.Framework.Prism.UnityExtensions;
-using WPF.Framework.Prism.Views;
+using WPF.Framework.Prism.ViewModels;
+using WPF.Framework.Prism.ViewModels.Interfaces;
+using WPF.Framework.Prism.Views.Shell;
 
 namespace WPF.Framework.Prism
 {
@@ -24,6 +26,10 @@ namespace WPF.Framework.Prism
             //Resolve default instance of ILoggerFacade
             Container.Resolve<ILoggerFacade>();
 
+            //Register view models
+            Container.RegisterType<IShellViewModel, ShellViewModel>();
+            Container.RegisterType<INavigationViewModel, NavigationViewModel>();
+
             //Register types as singletons
             Container.RegisterType<IShell, Shell>(new ContainerControlledLifetimeManager());
             Container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
@@ -38,6 +44,17 @@ namespace WPF.Framework.Prism
 
         protected override DependencyObject CreateShell()
         {
+            //Show a splash screen this will pop up before InitializeShell
+            //var splash = new Views.SplashScreen();
+            //splash.Show();
+            //var shell = (Shell)Container.Resolve<IShell>();
+            //shell.Dispatcher.BeginInvoke((Action)delegate
+            //{
+            //    splash.Close();
+            //    shell.Show();
+            //});
+            //return shell;
+
             return Container.Resolve<IShell>() as DependencyObject;
         }
 
@@ -45,6 +62,7 @@ namespace WPF.Framework.Prism
         {
             base.InitializeShell();
 
+            //Application.Current.MainWindow = new Views.SplashScreen();
             Application.Current.MainWindow = (Shell) Shell;
             Application.Current.MainWindow.Show();
 
@@ -54,8 +72,6 @@ namespace WPF.Framework.Prism
             regionManager.RegisterViewWithRegion(RegionNames.NavigationRegion, () => Container.Resolve<NavigationView>());
             regionManager.RegisterViewWithRegion(RegionNames.StatusRegion, () => Container.Resolve<StatusView>());
             regionManager.RegisterViewWithRegion(RegionNames.MenuRegion, () => Container.Resolve<MenuView>());
-
-
         }
 
         protected override void ConfigureModuleCatalog()

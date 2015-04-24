@@ -1,6 +1,7 @@
 ﻿using System.Windows;
+using WPF.Framework.Prism.ViewModels.Interfaces;
 
-namespace WPF.Framework.Prism
+namespace WPF.Framework.Prism.Views.Shell
 {
     /// <summary>
     /// Interaction logic for Shell.xaml
@@ -10,6 +11,11 @@ namespace WPF.Framework.Prism
         public Shell()
         {
             InitializeComponent();
+        }
+
+        public Shell(IShellViewModel vm) : this()
+        {
+            DataContext = vm;
         }
     }
 }

@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Framework.Prism", "WPF.Framework.Prism\WPF.Framework.Prism.csproj", "{B36DF734-282D-4E83-AE8A-E9276AC6612C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E07B291E-7124-4BAA-9404-5C5687CAA1E9} = {E07B291E-7124-4BAA-9404-5C5687CAA1E9}
+		{78CFBF6A-F8F1-4488-AEDC-32D83B93AE95} = {78CFBF6A-F8F1-4488-AEDC-32D83B93AE95}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{C54D0EEC-7A4E-4A6B-888A-1B76D80B1BE3}"
 EndProject
@@ -12,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Framework.Infrastructure", "WPF.Framework.Infrastructure\WPF.Framework.Infrastructure.csproj", "{9EC90100-437C-48F3-810B-745BE7325DE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Framework.Data", "WPF.Framework.Data\WPF.Framework.Data.csproj", "{7D52AE4E-060D-4DEE-8490-E60C5B64CD8E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPF.Framework.AuthenticationModule", "WPF.Framework.AuthenticationModule\WPF.Framework.AuthenticationModule.csproj", "{E07B291E-7124-4BAA-9404-5C5687CAA1E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,11 +41,16 @@ Global
 		{7D52AE4E-060D-4DEE-8490-E60C5B64CD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D52AE4E-060D-4DEE-8490-E60C5B64CD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D52AE4E-060D-4DEE-8490-E60C5B64CD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E07B291E-7124-4BAA-9404-5C5687CAA1E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E07B291E-7124-4BAA-9404-5C5687CAA1E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E07B291E-7124-4BAA-9404-5C5687CAA1E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E07B291E-7124-4BAA-9404-5C5687CAA1E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{78CFBF6A-F8F1-4488-AEDC-32D83B93AE95} = {C54D0EEC-7A4E-4A6B-888A-1B76D80B1BE3}
+		{E07B291E-7124-4BAA-9404-5C5687CAA1E9} = {C54D0EEC-7A4E-4A6B-888A-1B76D80B1BE3}
 	EndGlobalSection
 EndGlobal

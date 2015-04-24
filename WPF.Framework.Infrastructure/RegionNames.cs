@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WPF.Framework.Infrastructure
+﻿namespace WPF.Framework.Infrastructure
 {
     public static class RegionNames
     {
@@ -12,5 +6,7 @@ namespace WPF.Framework.Infrastructure
         public static string NavigationRegion = "NavigationRegion";
         public static string MenuRegion = "MenuRegion";
         public static string StatusRegion = "StatusRegion";
+
+        public static string WindowRegion = "WindowRegion";
     }
 }

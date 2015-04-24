@@ -1,22 +1,18 @@
 ﻿using System.Collections.Generic;
-using System.Windows.Controls;
 using Microsoft.Practices.Prism.PubSubEvents;
 using WPF.Framework.Infrastructure.Models;
 using WPF.Framework.Infrastructure.PubSubEvents;
+using WPF.Framework.Prism.ViewModels.Interfaces;
 
-namespace WPF.Framework.Prism.Views
+namespace WPF.Framework.Prism.ViewModels
 {
-    /// <summary>
-    /// Interaction logic for NavigationView.xaml
-    /// </summary>
-    public partial class NavigationView : UserControl
+    public class NavigationViewModel : INavigationViewModel
     {
-        public NavigationView(IEventAggregator eventAggregator)
+        public NavigationViewModel(IEventAggregator eventAggregator)
         {
-            InitializeComponent();
-            DataContext = this;
             eventAggregator.GetEvent<AddNavigationButton>().Subscribe(OnAddNavigationButton);
         }
+
         List<NavigationButton> _navButtons = new List<NavigationButton>();
 
         public List<NavigationButton> NavButtons

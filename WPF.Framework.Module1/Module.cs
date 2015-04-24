@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Modularity;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.Unity;
-using Newtonsoft.Json;
 using WPF.Framework.Infrastructure;
 using WPF.Framework.Infrastructure.Models;
 using WPF.Framework.Infrastructure.PubSubEvents;
@@ -41,13 +37,12 @@ namespace WPF.Framework.Module1
             //Register viewmodels
             _container.RegisterType<IHelloWorldViewModel, HelloWorldViewModel>();
 
-            var mainRegion = _regionManager.Regions[RegionNames.MainRegion];
-
             //Register views with region manager
-            _regionManager.RegisterViewWithRegion("MainRegion", typeof (HelloWorld));
-            _regionManager.RegisterViewWithRegion("MainRegion", typeof(UserControl1));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof (HelloWorld));
+            _regionManager.RegisterViewWithRegion(RegionNames.MainRegion, typeof(UserControl1));
 
             //Since RegisterViewWithRegion does not activate a view, navigate to a view
+            var mainRegion = _regionManager.Regions[RegionNames.MainRegion];
             mainRegion.RequestNavigate(new Uri("HelloWorld", UriKind.Relative));
 
             try

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Controls;
-using Microsoft.Practices.Prism;
-using Microsoft.Practices.Prism.Mvvm;
-using WPF.Framework.Infrastructure.Services.Interfaces;
-using WPF.Framework.Module1.ViewModels;
+﻿using System.Windows.Controls;
 using WPF.Framework.Module1.ViewModels.Interfaces;
 
 namespace WPF.Framework.Module1.Views
@@ -12,7 +6,7 @@ namespace WPF.Framework.Module1.Views
     /// <summary>
     /// Interaction logic for UserControl1.xaml
     /// </summary>
-    public partial class HelloWorld : UserControl, IView
+    public partial class HelloWorld : UserControl
     {
         public HelloWorld()
         {

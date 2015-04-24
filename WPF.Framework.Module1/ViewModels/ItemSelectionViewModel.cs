@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
-using WPF.Framework.Infrastructure;
 using WPF.Framework.Infrastructure.ViewModelBases;
 
 namespace WPF.Framework.Module1.ViewModels

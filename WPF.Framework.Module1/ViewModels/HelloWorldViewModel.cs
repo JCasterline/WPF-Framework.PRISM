@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Microsoft.Practices.Prism;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Interactivity.InteractionRequest;
 using Microsoft.Practices.Prism.Regions;
-using WPF.Framework.Infrastructure.Services;
 using WPF.Framework.Infrastructure.Services.Interfaces;
 using WPF.Framework.Infrastructure.ViewModelBases;
 using WPF.Framework.Module1.ViewModels.Interfaces;
